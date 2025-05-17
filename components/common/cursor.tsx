@@ -1,9 +1,12 @@
-
-
 import styles from "./Cursor.module.scss";
 import { MutableRefObject, useEffect, useRef } from "react";
 import { gsap, Linear } from "gsap";
-import { IDesktop, isSmallScreen } from "pages";
+
+// اینترفیس و تابع رو همینجا بذار
+export interface IDesktop {
+  isDesktop: boolean;
+}
+export const isSmallScreen = (): boolean => document.body.clientWidth < 767;
 
 const CURSOR_STYLES = {
   CURSOR: "fixed hidden bg-white w-4 h-4 select-none pointer-events-none z-50",
