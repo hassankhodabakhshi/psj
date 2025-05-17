@@ -1,12 +1,7 @@
 import styles from "./Cursor.module.scss";
 import { MutableRefObject, useEffect, useRef } from "react";
 import { gsap, Linear } from "gsap";
-
-// اینترفیس و تابع مورد نیاز مستقیماً همینجا تعریف شدن
-export interface IDesktop {
-  isDesktop: boolean;
-}
-export const isSmallScreen = (): boolean => document.body.clientWidth < 767;
+import { IDesktop, isSmallScreen } from "pages";
 
 const CURSOR_STYLES = {
   CURSOR: "fixed hidden bg-white w-4 h-4 select-none pointer-events-none z-50",
@@ -70,15 +65,6 @@ const Cursor = ({ isDesktop }: IDesktop) => {
     if (isDesktop && !isSmallScreen()) {
       initCursorAnimation();
     }
-    // Cleanup برای جلوگیری از memory leak
-    return () => {
-      document.removeEventListener("mousemove", moveCircle);
-      document.querySelectorAll(".link").forEach((el) => {
-        el.removeEventListener("mouseenter", onHover);
-        el.removeEventListener("mouseleave", onUnhover);
-      });
-    };
-    // eslint-disable-next-line
   }, [cursor, follower, isDesktop]);
 
   return (
