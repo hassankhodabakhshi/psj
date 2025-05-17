@@ -2,7 +2,7 @@ import styles from "./Cursor.module.scss";
 import { MutableRefObject, useEffect, useRef } from "react";
 import { gsap, Linear } from "gsap";
 
-// اینترفیس و تابع رو همینجا بذار
+// اینترفیس و تابع مورد نیاز مستقیماً همینجا تعریف شدن
 export interface IDesktop {
   isDesktop: boolean;
 }
@@ -70,6 +70,15 @@ const Cursor = ({ isDesktop }: IDesktop) => {
     if (isDesktop && !isSmallScreen()) {
       initCursorAnimation();
     }
+    // Cleanup برای جلوگیری از memory leak
+    return () => {
+      document.removeEventListener("mousemove", moveCircle);
+      document.querySelectorAll(".link").forEach((el) => {
+        el.removeEventListener("mouseenter", onHover);
+        el.removeEventListener("mouseleave", onUnhover);
+      });
+    };
+    // eslint-disable-next-line
   }, [cursor, follower, isDesktop]);
 
   return (
