@@ -1,11 +1,14 @@
-
-
 import React, { MutableRefObject, useEffect, useRef, useState } from "react";
 import { MENULINKS, PROJECTS } from "../../constants";
 import ProjectTile from "../common/project-tile";
 import { gsap, Linear } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import { IDesktop, NO_MOTION_PREFERENCE_QUERY } from "pages";
+
+// اینترفیس و مقدار مورد نیاز رو اینجا تعریف کن
+export interface IDesktop {
+ isDesktop: boolean;
+} 
+const NO_MOTION_PREFERENCE_QUERY = "(prefers-reduced-motion: no-preference)";
 
 const PROJECT_STYLES = {
   SECTION:

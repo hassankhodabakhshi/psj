@@ -2,7 +2,6 @@ import styles from "./Cursor.module.scss";
 import { MutableRefObject, useEffect, useRef } from "react";
 import { gsap, Linear } from "gsap";
 
-// اینترفیس و تابع مورد نیاز مستقیماً همینجا تعریف شدن
 export interface IDesktop {
   isDesktop: boolean;
 }
@@ -17,60 +16,40 @@ const Cursor = ({ isDesktop }: IDesktop) => {
   const cursor: MutableRefObject<HTMLDivElement> = useRef(null);
   const follower: MutableRefObject<HTMLDivElement> = useRef(null);
 
-  const onHover = () => {
-    gsap.to(cursor.current, {
-      scale: 0.5,
-      duration: 0.3,
-    });
-    gsap.to(follower.current, {
-      scale: 3,
-      duration: 0.3,
-    });
-  };
-
-  const onUnhover = () => {
-    gsap.to(cursor.current, {
-      scale: 1,
-      duration: 0.3,
-    });
-    gsap.to(follower.current, {
-      scale: 1,
-      duration: 0.3,
-    });
-  };
-
-  const moveCircle = (e: MouseEvent) => {
-    gsap.to(cursor.current, {
-      x: e.clientX,
-      y: e.clientY,
-      duration: 0.1,
-      ease: Linear.easeNone,
-    });
-    gsap.to(follower.current, {
-      x: e.clientX,
-      y: e.clientY,
-      duration: 0.3,
-      ease: Linear.easeNone,
-    });
-  };
-
-  const initCursorAnimation = () => {
-    follower.current.classList.remove("hidden");
-    cursor.current.classList.remove("hidden");
-
-    document.addEventListener("mousemove", moveCircle);
-
-    document.querySelectorAll(".link").forEach((el) => {
-      el.addEventListener("mouseenter", onHover);
-      el.addEventListener("mouseleave", onUnhover);
-    });
-  };
-
   useEffect(() => {
+    const onHover = () => {
+      gsap.to(cursor.current, { scale: 0.5, duration: 0.3 });
+      gsap.to(follower.current, { scale: 3, duration: 0.3 });
+    };
+    const onUnhover = () => {
+      gsap.to(cursor.current, { scale: 1, duration: 0.3 });
+      gsap.to(follower.current, { scale: 1, duration: 0.3 });
+    };
+    const moveCircle = (e: MouseEvent) => {
+      gsap.to(cursor.current, {
+        x: e.clientX,
+        y: e.clientY,
+        duration: 0.1,
+        ease: Linear.easeNone,
+      });
+      gsap.to(follower.current, {
+        x: e.clientX,
+        y: e.clientY,
+        duration: 0.3,
+        ease: Linear.easeNone,
+      });
+    };
+
     if (isDesktop && !isSmallScreen()) {
-      initCursorAnimation();
+      follower.current.classList.remove("hidden");
+      cursor.current.classList.remove("hidden");
+
+      document.addEventListener("mousemove", moveCircle);
+      document.querySelectorAll(".link").forEach((el) => {
+        el.addEventListener("mouseenter", onHover);
+        el.addEventListener("mouseleave", onUnhover);
+      });
     }
-    // Cleanup برای جلوگیری از memory leak
     return () => {
       document.removeEventListener("mousemove", moveCircle);
       document.querySelectorAll(".link").forEach((el) => {
@@ -78,8 +57,7 @@ const Cursor = ({ isDesktop }: IDesktop) => {
         el.removeEventListener("mouseleave", onUnhover);
       });
     };
-    // eslint-disable-next-line
-  }, [cursor, follower, isDesktop]);
+  }, [isDesktop]);
 
   return (
     <>

@@ -1,7 +1,10 @@
 import { gsap, Linear } from "gsap";
 import { MutableRefObject, useEffect, useRef, useState } from "react";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import { isSmallScreen, NO_MOTION_PREFERENCE_QUERY } from "pages";
+
+// این دو خط رو اضافه کن و import از "pages" رو حذف کن
+const isSmallScreen = (): boolean => document.body.clientWidth < 767;
+const NO_MOTION_PREFERENCE_QUERY = "(prefers-reduced-motion: no-preference)";
 
 const COLLABORATION_STYLE = {
   SLIDING_TEXT: "opacity-20 text-5xl md:text-7xl font-bold whitespace-nowrap",
@@ -93,24 +96,14 @@ const CollaborationSection = () => {
       }`}
     >
       پارسین سازه جنوب<span className="text-strong font-bold">شرکت</span>
-
     </h1>
   );
 
   return (
     <section className={COLLABORATION_STYLE.SECTION} ref={targetSection}>
-      {renderSlidingText(
-        "طراحی نظارت اجرا",
-        "ui-left"
-      )}
-
+      {renderSlidingText("طراحی نظارت اجرا", "ui-left")}
       {renderTitle()}
-
-      {renderSlidingText(
-        "  مجری پروژه های عمرانی    ",
-
-"mt-6 md:mt-8 ui-right"
-      )}
+      {renderSlidingText("  مجری پروژه های عمرانی    ", "mt-6 md:mt-8 ui-right")}
     </section>
   );
 };
