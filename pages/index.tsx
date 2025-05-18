@@ -19,7 +19,7 @@ import Footer from "../components/common/footer";
 import TimelineSection from "../components/home/timeline";
 //import Scripts from "../components/common/scripts";
 import AboutSection from "../components/home/about";
-import Sans from '../components/fonts/Sans.woff';
+//import Sans from '../components/fonts/Sans.woff';
 
 
 const DEBOUNCE_TIME = 100;
